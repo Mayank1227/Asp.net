@@ -1,0 +1,214 @@
+Create database Mayankdb
+
+create Table Student(
+id int identity(1,1),
+RollNo int,
+name Varchar(250),
+address Varchar(250)
+);
+
+select * from Student
+
+----------------------------------------Data insert -----------------------------------------
+
+INSERT INTO Student(rollno, name, address)
+VALUES (22,'MAyak Patel','abhmedabad');
+
+-------------Return data from the Student table-------------
+
+select rollno,name from Student
+
+-----------------DELETE Syntax---------------------
+
+DELETE FROM Student WHERE id=4
+'
+----------Table jova  Mate------------------
+
+select * from Student
+
+
+--------Update  Karva Mate ------------------------
+update Student set rollno=24,name='abhishek',address='kalol gandhinagarr'where id=1
+
+
+-----------new colum add karva mate --------------
+
+ ALTER TABLE Student
+ADD Mobile bigint;
+
+----------new colum  ma value add karva mate---------
+
+update Student set Mobile=9812237997 where id=1
+
+-------------------ALTER TABLE - RENAME COLUMN--------------
+
+
+---------------COlum Delet karva mate-------------
+
+ALTER TABLE Student
+DROP COLUMN address;
+
+---------Aakhu Tebal Delet karva mate---------
+
+ truncate table Student
+
+----------SQL ORDER BY--------- A to Z--Lainma------  And--Z to A ----mate -----DESC lagavvu-------------
+
+
+SELECT * FROM Student ORDER BY name
+
+SELECT * FROM Student ORDER BY name DESC
+
+
+---------SQL AND Operator---------------Bane conditions sachi hoy to-----
+
+SELECT * FROM Student WHERE name = 'Manish' AND  address='surat'
+
+
+---------SQL AND Operator---------------More then one conditions sachi hoy to-----
+
+
+SELECT * FROM  Student  WHERE name = 'Manish' OR  address='palanpur'
+
+
+---------SQL Not Operator-------- conditions Ma--na--hoy--te-----
+
+
+SELECT * FROM  Student  WHERE  NOT  address='palanpur'
+
+-----------SQL Aggregate Functions----------------------
+
+SELECT MIN(fee)FROM Student;
+
+SELECT MAX(fee) FROM Student;
+
+SELECT SUM(fee) FROM Student;
+
+SELECT COUNT(fee) FROM Student;
+
+SELECT AVG(fee) FROM Student;
+
+
+-------------------SQL LIKE Operator----------------------------------------------
+
+SELECT * FROM Student WHERE name LIKE 'm%';   ----------first ch search--------------
+
+SELECT * FROM Student WHERE name LIKE '_m%';   ----------second ch search-----------
+
+SELECT * FROM Student WHERE name LIKE '%j%';   ----------Midal ch search-------------
+
+--------------------SQL IN Operator----------------Multipal value search-----------
+
+
+SELECT * FROM Student WHERE name IN (' Manish', '  parth patel');
+
+
+---------------SQL BETWEEN Operator-------Range select karva mate-----------
+
+SELECT * FROM Student WHERE fee  BETWEEN  10000 AND 23000;
+
+
+---------------------------SQL JOIN ----------Tebal join karva mate--------------------------------------------------------
+
+create Table Hostel(
+id int identity(1,1),
+ Hostelid int,
+ Hostelname Varchar(250),
+City Varchar(50),
+Studentid int
+);
+
+create Table Student(
+id int identity(1,1),
+Studentid int,
+Studentname Varchar(250),
+City Varchar(50),
+Age int
+);
+
+
+select Student.studentname,Student.age,hostel.hostelname from student inner join hostel
+on Student.studentid=hostel.studentid
+
+select Student.studentname,Student.age,hostel.hostelname from student left outer join hostel
+on Student.studentid=hostel.studentid
+
+
+select Student.studentname,Student.age,hostel.hostelname from student right outer join hostel
+on Student.studentid=hostel.studentid
+
+
+select Student.studentname,Student.age,hostel.hostelname from student full outer join hostel
+on Student.studentid=hostel.studentid
+
+
+
+----------------------------------------------Not--Null-- Vo fild ham khali nhi chod sakte------- --------------------------------------------
+
+CREATE TABLE Persons (
+    ID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255) NOT NULL,
+    Age int
+);
+
+insert into Persons values(null,'vyas','abhishek',23)
+
+---- unique ----sem values nhi honi chahiye-----------
+
+
+CREATE TABLE Persons1 (
+    ID int NOT NULL unique,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int
+);
+insert into Persons1 values(1,'raj','abhishek',23)
+
+----------------------------------------- PRIMARY KEY constraint uniquely --- sem na hovi joea--------
+
+CREATE TABLE Persons2 (
+    PersonID  int  primary key,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int
+);
+insert into Persons2 values(2,'Patel','abhishek',45)
+
+-----------------------------------------FOREIGN KEY is a field (or collection of fields) in one table, that refers to the PRIMARY KEY in another table------------------
+
+CREATE TABLE Persons3 (
+    PersonID  int  primary key,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int
+);
+
+CREATE TABLE Orders (
+    OrderID int NOT NULL PRIMARY KEY,
+    OrderNumber int NOT NULL,
+    PersonID int FOREIGN KEY REFERENCES Persons3(PersonID)
+);
+
+delete from Persons3 where LastName='patel'
+
+-----------------------------------------check--ham conditions provided  kavate he-------------------
+
+CREATE TABLE Persons4 (
+    ID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int check (Age>=18 and Age<=60)
+);
+insert into Persons4 values(1,'raj','abhishek',45)
+
+
+---------------------- Stored Procedures------------------------------------------------------------------------------------
+
+CREATE PROCEDURE SelectAllStudent
+AS
+SELECT * FROM Student
+GO;
+
+------------------------Execute a Stored Procedure---------------------------------------------------------
+EXEC SelectAllStudent;

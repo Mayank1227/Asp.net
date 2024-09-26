@@ -1,0 +1,279 @@
+emai and mobil allreday ragistar cod
+
+
+using System;
+using System.Data;
+using System.Data.SqlClient;
+
+namespace Asp.Net
+{
+    public partial class SignupPage : System.Web.UI.Page
+    {
+        SqlConnection con = new SqlConnection("Data Source=DESKTOP-0T00OD0;Initial Catalog=userdb;Integrated Security=True");
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            // Ensure any initial logic required on page load happens here.
+        }
+
+        protected void Button1_Click1(object sender, EventArgs e)
+        {
+            string email = TextBox2.Text;
+            string mobile = TextBox3.Text;
+            string password = TextBox4.Text;
+
+            // Check if either email or mobile number already exists in the database
+            if (IsEmailOrMobileRegistered(email, mobile))
+            {
+                Label1.Text = "Email or Mobile number is already registered.";
+                return;
+            }
+
+            // Register the user in the database
+            con.Open();
+            SqlCommand cmd = new SqlCommand("INSERT INTO userdata (name, email, mobile, password) VALUES (@name, @email, @mobile, @password)", con);
+            cmd.Parameters.AddWithValue("@name", TextBox1.Text);
+            cmd.Parameters.AddWithValue("@email", email);
+            cmd.Parameters.AddWithValue("@mobile", mobile);
+            cmd.Parameters.AddWithValue("@password", password);
+
+            cmd.ExecuteNonQuery();
+            con.Close();
+
+            Label1.Text = "Registration successful!";
+        }
+
+        // Method to check if either email or mobile is already registered
+        private bool IsEmailOrMobileRegistered(string email, string mobile)
+        {
+            bool isRegistered = false;
+
+            con.Open();
+            // Query to check if either the email or mobile number exists
+            SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM userdata WHERE email = @Email OR mobile = @Mobile", con);
+            cmd.Parameters.AddWithValue("@Email", email);
+            cmd.Parameters.AddWithValue("@Mobile", mobile);
+
+            int count = (int)cmd.ExecuteScalar();
+            con.Close();
+
+            if (count > 0)
+            {
+                isRegistered = true;
+            }
+
+            return isRegistered;
+        }
+    }
+}
+
+
+---------------------dispaly email msg---------------------------------------
+
+<asp:TextBox ID="TextBox1" runat="server" CssClass="form-control" placeholder="Enter your email"></asp:TextBox>
+<br />
+<asp:Label ID="lblEmailError" runat="server" Text="" ForeColor="Red" Visible="False"></asp:Label>
+<br />
+<asp:TextBox ID="TextBox2" runat="server" CssClass="form-control" TextMode="Password" placeholder="Enter your password"></asp:TextBox>
+<br />
+<asp:Label ID="lblPasswordError" runat="server" Text="" ForeColor="Red" Visible="False"></asp:Label>
+<br />
+<asp:Button ID="Button1" runat="server" Text="Login" OnClick="Button1_Click" />
+
+
+
+
+
+
+
+
+
+public partial class LoginPage : System.Web.UI.Page
+{
+    SqlConnection con = new SqlConnection("Data Source=DESKTOP-0T00OD0;Initial Catalog=userdb;Integrated Security=True");
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+
+    }
+
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+        string email = TextBox1.Text.Trim();
+        string password = TextBox2.Text.Trim();
+
+        // Clear previous error messages
+        lblEmailError.Text = "";
+        lblPasswordError.Text = "";
+        lblEmailError.Visible = false;
+        lblPasswordError.Visible = false;
+
+        con.Open();
+
+        // Check if the email exists in the database
+        SqlCommand checkEmailCmd = new SqlCommand("select * from userdata where email=@Email", con);
+        checkEmailCmd.Parameters.AddWithValue("@Email", email);
+        SqlDataReader dr = checkEmailCmd.ExecuteReader();
+
+        if (!dr.HasRows) // Email not registered
+        {
+            lblEmailError.Text = "Email is not registered!";
+            lblEmailError.Visible = true;
+        }
+        else
+        {
+            dr.Close(); // Close previous DataReader
+
+            // Check if the email and password match
+            SqlCommand cmd = new SqlCommand("select * from userdata where email=@Email and password=@Password", con);
+            cmd.Parameters.AddWithValue("@Email", email);
+            cmd.Parameters.AddWithValue("@Password", password);
+            SqlDataReader loginReader = cmd.ExecuteReader();
+
+            if (loginReader.Read())
+            {
+                // Login successful
+                Session["email"] = email;
+                Response.Redirect("Home.aspx");
+            }
+            else
+            {
+                // Email exists but password is incorrect
+                lblPasswordError.Text = "Invalid password!";
+                lblPasswordError.Visible = true;
+            }
+        }
+
+        con.Close();
+
+        // Clear the input fields
+        TextBox1.Text = "";
+        TextBox2.Text = "";
+    }
+}
+
+
+
+con.Open();
+            SqlCommand cmd = new SqlCommand("select * from userdata where  email=@email and password=@password", con);
+            cmd.Parameters.AddWithValue("@email",TextBox1.Text);
+            cmd.Parameters.AddWithValue("@password",TextBox2.Text);
+            SqlDataReader dr;
+            dr = cmd.ExecuteReader();
+            if (dr.Read())
+            {
+                Session["email"] = TextBox1.Text;
+                Response.Redirect("Home.aspx");
+            }
+            else
+            {
+                Response.Write("<script>alert('login failed')</script>");
+
+            }
+            TextBox1.Text = "";
+            TextBox2.Text = "";
+
+
+
+ -------------------blank deta form-----------------------------------------------------
+using System;
+using System.Data;
+using System.Data.SqlClient;
+
+namespace Asp.Net
+{
+    public partial class SignupPage : System.Web.UI.Page
+    {
+        SqlConnection con = new SqlConnection("Data Source=DESKTOP-0T00OD0;Initial Catalog=userdb;Integrated Security=True");
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            // Page load logic, if needed
+        }
+
+        protected void Button1_Click1(object sender, EventArgs e)
+        {
+            string email = TextBox2.Text;
+            string mobile = TextBox3.Text;
+            Label1.Text = "";
+            Label1.Visible = false;
+
+            // Check if email or mobile already exists in the database
+            if (IsEmailOrMobileRegistered(email, mobile))
+            {
+                Label1.Text = "Email or Mobile is already registered.";
+                Label1.Visible = true;  // Make the label visible
+                return; // Exit the method if email or mobile is already registered
+            }
+
+            try
+            {
+                // Open connection and insert the user into the database
+                con.Open();
+                SqlCommand cmd = new SqlCommand("insert into userdata (name, email, mobile, password) values (@name, @Email, @Mobile, @Password)", con);
+                cmd.Parameters.AddWithValue("@name", TextBox1.Text);
+                cmd.Parameters.AddWithValue("@Email", email);
+                cmd.Parameters.AddWithValue("@Mobile", mobile);
+                cmd.Parameters.AddWithValue("@Password", TextBox4.Text);
+
+                cmd.ExecuteNonQuery(); // Execute the insert command
+                con.Close();
+
+                // Display success message
+                Label1.Text = "Registration Successful!";
+                Label1.Visible = true;
+            }
+            catch (Exception ex)
+            {
+                // Handle any potential errors and show a message
+                Label1.Text = "An error occurred: " + ex.Message;
+                Label1.Visible = true;
+            }
+            finally
+            {
+                if (con.State == ConnectionState.Open)
+                {
+                    con.Close(); // Ensure connection is closed
+                }
+            }
+        }
+
+        private bool IsEmailOrMobileRegistered(string email, string mobile)
+        {
+            bool isRegistered = false;
+
+            try
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM userdata WHERE email = @Email OR mobile = @Mobile", con);
+                cmd.Parameters.AddWithValue("@Email", email);
+                cmd.Parameters.AddWithValue("@Mobile", mobile);
+
+                int count = (int)cmd.ExecuteScalar();
+                isRegistered = count > 0; // If count > 0, it means the email or mobile is already registered
+            }
+            catch (Exception ex)
+            {
+                // You could log the error message here
+                Label1.Text = "Error checking registration: " + ex.Message;
+                Label1.Visible = true;
+            }
+            finally
+            {
+                if (con.State == ConnectionState.Open)
+                {
+                    con.Close(); // Ensure connection is closed after query
+                }
+            }
+
+            return isRegistered;
+        }
+    }
+}
+
+
+
+
+
+
+

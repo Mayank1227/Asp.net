@@ -1,0 +1,57 @@
+--------------------------------StoredProcedure---- sql three tiyer----------------------------------
+---table banavvu and go to  Programmability --te ne ander StoredProcedure  par right click karvu ----
+
+
+USE [Employeedb]----------------------databbase name---------------
+GO
+/****** Object:  StoredProcedure [dbo].[Sp_StudentReg]    Script Date: 9/13/2024 3:41:59 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+ALTER PROCEDURE [dbo].[Sp_StudentReg]   ------------table name stored procedures-----------------
+@id int=0,
+@firstname nvarchar(50)=null,
+@lastname nvarchar(50)=null,
+@emailid nvarchar(50)=null,
+@password nvarchar(50)=null,
+@age int=0,
+@action varchar(50)=null
+
+AS
+BEGIN
+if(@action='insert')
+begin
+
+insert into StudentReg(firstname,lastname,emailid,password,age) values(@firstname,@lastname,@emailid,@password,@age)
+end
+
+if(@action='select')
+
+begin
+
+select * from StudentReg
+end
+
+if(@action='delete')
+
+begin
+
+delete from StudentReg where id=@id
+end
+
+
+if(@action='update')
+
+begin
+
+update StudentReg set firstname=@firstname,lastname=@lastname,emailid=@emailid,password=@password where id=@id
+end
+
+if(@action='login')
+begin
+select * from tbl_StudReg where emailid=@emailid and password=@password
+end
+
+END
