@@ -1,0 +1,22 @@
+﻿@model MvcfirstApplication1.Models.AdditionModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<div>
+    @using (Html.BeginForm("Index", "Calculation", FormMethod.Post))
+    {
+        <h3 style="color:blue;">Operation Of Two Numbers</h3>
+        @Html.TextBoxFor(m => m.a)<br /><br />
+        @Html.TextBoxFor(m => m.b)<br /><br />
+
+
+        <h5>REsult of two values:</h5> @Html.DisplayFor(m => m.result)<br /><br />
+        <input type="submit" value="add" name="command" />
+        <input type="submit" value="sub" name="command" />
+        <input type="submit" value="mul" name="command" />
+    }
+</div>

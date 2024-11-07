@@ -1,0 +1,35 @@
+﻿@model  IEnumerable<MvcfirstApplication1.Models.Student>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<table style="border:solid">
+    <tr>
+        <th>@Html.DisplayNameFor(m => m.StudentId)</th>
+
+        <th>@Html.DisplayNameFor(m => m.StudentName)</th>
+        <th>@Html.DisplayNameFor(m => m.Age)</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td> @Html.DisplayFor(m => item.StudentId)</td>
+            <td> @Html.DisplayFor(m => item.StudentName)</td>
+            <td> @Html.DisplayFor(m => item.Age)</td>
+
+
+            <td> @Html.DisplayFor(m => item.Age)</td>
+
+        </tr>
+
+
+    }
+
+
+
+
+</table>
+

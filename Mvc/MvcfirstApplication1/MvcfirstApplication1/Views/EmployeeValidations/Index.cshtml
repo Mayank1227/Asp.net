@@ -1,0 +1,115 @@
+﻿@model MvcfirstApplication1.Controllers.EmployeeValidations
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@using (Html.BeginForm("Index", "EmployeeValidations", FormMethod.Post, htmlAttributes: new { @class = "" }))
+{
+    <div class="form-horizontal">
+        <br /><br />
+        <div class="form-group">
+
+            <div class="col-md-offset-2 col-md-10">
+
+                <h4>   Employee Registration </h4>
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.empname, htmlAttributes: new { @class = "col-lg-2 control-label" })
+            <div class="col-lg-10">
+
+                @Html.TextBoxFor(model => model.empname, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.empname, "", htmlAttributes: new { @class = "text-danger" })
+            </div>
+
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Emailid, htmlAttributes: new { @class = "col-lg-2 control-label" })
+
+            <div class="col-lg-10">
+                @Html.TextBoxFor(model => model.Emailid, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Emailid, "", htmlAttributes: new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "col-lg-2 control-label" })
+
+            <div class="col-lg-10">
+                @Html.PasswordFor(model => model.Password, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Password, "", htmlAttributes: new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "col-lg-2 control-label" })
+            <div class="col-lg-10">
+                @Html.TextBoxFor(model => model.Address, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Address, "", htmlAttributes: new { @class = "text-danger" })
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.gender, htmlAttributes: new { @class = "col-lg-2 control-label" })
+
+            <div class="col-lg-10">
+                @Html.RadioButtonFor(model => model.gender, "Male")Male
+                @Html.RadioButtonFor(model => model.gender, "FeMale")FeMale
+            </div>
+
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.salary, htmlAttributes: new { @class = "col-lg-2 control-label" })
+
+            <div class="col-lg-10">
+                @Html.TextBoxFor(model => model.salary, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.salary, "", htmlAttributes: new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Age, htmlAttributes: new { @class = "col-lg-2 control-label" })
+
+            <div class="col-lg-10">
+                @Html.TextBoxFor(model => model.Age, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Age, "", htmlAttributes: new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Contact, htmlAttributes: new { @class = "col-lg-2 control-label" })
+
+            <div class="col-lg-10">
+                @Html.TextBoxFor(model => model.Contact, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Contact, "", htmlAttributes: new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+}

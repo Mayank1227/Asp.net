@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewBag.Title = "Multiply";
+}
+
+<h2>Multiply</h2>
+
+@{ 
+
+    int result;
+
+    result = Convert.ToInt32(ViewData["first"]) * Convert.ToInt32(ViewData["Second"]);
+
+}
+<h3>Multiplication = @result</h3>

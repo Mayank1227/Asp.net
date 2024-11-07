@@ -1,0 +1,53 @@
+﻿@model MvcCrudApplication.Models.UserReg
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+@using (Html.BeginForm("Login", "LoginFirst", FormMethod.Post))
+{
+    <div class="form-group text-center"><h2>User login</h2></div>
+
+    <div class="form-group">
+
+
+
+        @Html.DropDownList("UserType", "Select UserType")
+
+    </div>
+
+    <div class="form-group">
+
+        @Html.LabelFor(model => model.UserEmailid, htmlAttributes: new { @class = "control-label col-md-2" })
+
+        <div class="col-lg-10">
+
+            @Html.TextBoxFor(model => model.UserEmailid, htmlAttributes: new { @class = "form-control col-md-5" })
+            @Html.ValidationMessageFor(model => model.UserEmailid, "", htmlAttributes: new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+
+        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+
+        <div class="col-lg-10">
+
+            @Html.PasswordFor(model => model.Password, htmlAttributes: new { @class = "form-control col-md-5" })
+            @Html.ValidationMessageFor(model => model.Password, "", htmlAttributes: new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group text-center">
+        @ViewBag.error
+
+    </div>
+    <div class="form-group text-center">
+
+        <button class="btn btn-primary">Log In</button>
+    </div>
+
+
+}

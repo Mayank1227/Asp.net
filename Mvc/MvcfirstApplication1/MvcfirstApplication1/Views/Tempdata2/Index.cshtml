@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@{
+    int result;
+    result = Convert.ToInt32(TempData["n1"]) + Convert.ToInt32(TempData["n2"]);
+}
+
+
+<h3>Addition of two values using tempdata:@result</h3>
